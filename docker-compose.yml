@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  first_app:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile-app1
+    ports:
+      - "5000:5000"
+    networks:
+      - my_network
+
+  second_app:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile-app2
+    environment:
+      - FIRST_APP_URL=http://first_app:5000
+    ports:
+      - "8000:8000"
+    networks:
+      - my_network
+
+networks:
+  my_network:
